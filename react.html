@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Check your Reaction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>Charan Teja Speed Check</h1>
+    <br>
+    <div id="target">Your time</div><br>
+    <div id="counter">Count</div><br>
+    <div>
+        <input type="button" class="btn btn-success" onclick="startTime()" value="Start Timer">
+        <input type="button" class="btn btn-danger" onclick="recordTime()" value="React">
+    </div>
+
+    <script>
+        var reactTime = undefined
+        randomCountdown= getRandomInt(2,10)
+
+        function recordTime() {
+            reactTime = Date.now()
+            console.log(reactTime);
+        }
+        function getRandomInt(min,max)
+        {
+            min=Math.ceil(min);
+            max=Math.floor(max);
+            Value=Math.floor(Math.random()*(max-min)+min);
+            return Value
+        }
+        function startTime() {
+            randomCountdown= getRandomInt(2,10)
+            for (let index = 0; index < randomCountdown; index++) {
+                setTimeout(
+                    function () {
+                        document.getElementById('counter').innerHTML = index
+                    }, (randomCountdown-1-index) * 1000)
+            }
+            setTimeout(
+                function () {
+                    var buttonType=Date.now()
+                    if(reactTime)
+                    {
+                        console.log("came here")
+                        document.getElementById('target').innerHTML='Time was '+(buttonType-reactTime)
+                    }
+                    else{
+                        document.getElementById('target').innerHTML='Too Slow'
+                    }
+                }, (randomCountdown-1)*1000)
+        }
+    </script>
+</body>
+</html>
