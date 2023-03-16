@@ -3,7 +3,7 @@
 
 <head>
   <link rel="stylesheet" href="style.css">
-  <title> Web-Apps Lab-7 </title>
+  <title>Hunter Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -13,16 +13,31 @@
     integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
     crossorigin="anonymous"></script>
 
+  <style>
+    p {
+      text-align: center;
+    }
+
+    div,
+    h1 {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Find the mouse by Charan Teja</h1>
-  <p class="btn btn-primary" id="instructions">Click on the bushes to search for the mouse, beware the cat</p>
-  <p class="btn btn-success" id="bushes">Number of bushes checked is zero.</p>
-  <p class="btn btn-danger" id="penalty">Penalty is zero.</p>
-  <p class="btn btn-warning" id="Clickhelp" onclick="help()">Click for help.</p>
-  <p class="btn btn-secondary" id="help">Help report</p>
-
+  <br>
+  <div>
+    <p class="btn btn-primary" id="instructions">Click on the bushes to search for the mouse, beware the cat</p>
+    <p class="btn btn-success" id="bushes">Number of bushes checked is zero.</p>
+    <p class="btn btn-danger" id="penalty">Penalty is zero.</p>
+    <p class="btn btn-warning" id="Clickhelp" onclick="help()">Click for help.</p>
+    <p class="btn btn-secondary" id="help">Help report</p>
+  </div>
+  <div>
+    <button onclick="bonus()" class="btn btn-primary">Play Again</button>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-sm-2"><img id="image1" src="bush.jpg" onclick="check(0)" class="img-thumbnail"></div>
@@ -92,54 +107,65 @@
     var catLocation = 21;
     var gameOver = false;
 
-    function check(position)
-     {
+    function check(position) {
       if (gameOver == true) {
         return
       }
       checkCount += 1
-        penalty += 1
-        document.getElementById("bushes").innerHTML = "Number of bushes checked is " + checkCount
+      penalty += 1
+      document.getElementById("bushes").innerHTML = "Number of bushes checked is " + checkCount
 
-        if (position == mouseLocation) {
-            document.getElementById(ids[position]).src = "mouse.jpg"
-            gameOver = true
-            penalty -= 3
-            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
-        }
-        else if (position == catLocation) {
-            document.getElementById(ids[position]).src = "tiger.jpg"
-            gameOver = true
-            penalty += 4
-            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
-        }
-        else {
-            document.getElementById(ids[position]).src = "grass.jpg"
-            document.getElementById("penalty").innerHTML = "Penalty is " + penalty
-        }
+      if (position == mouseLocation) {
+        document.getElementById(ids[position]).src = "mouse.jpg"
+        gameOver = true
+        penalty -= 3
+        document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+      }
+      else if (position == catLocation) {
+        document.getElementById(ids[position]).src = "tiger.jpg"
+        gameOver = true
+        penalty += 4
+        document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+      }
+      else {
+        document.getElementById(ids[position]).src = "grass.jpg"
+        document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+      }
 
-        lastCheck = position
+      lastCheck = position
     }
     function help() {
-        let row = parseInt(lastCheck / 4) - 1
-        let column = lastCheck % 6 
-        let catRow = parseInt(catLocation / 4) - 1
-        let catCol = catLocation % 6
-        let mouseRow = parseInt(mouseLocation / 4) - 1
-        let mouseCol = mouseLocation % 6  
+      let row = parseInt(lastCheck / 4) - 1
+      let column = lastCheck % 6
+      let catRow = parseInt(catLocation / 4) - 1
+      let catCol = catLocation % 6
+      let mouseRow = parseInt(mouseLocation / 4) - 1
+      let mouseCol = mouseLocation % 6
 
-        if ((Math.abs(catRow - row) <= 1) && (Math.abs(catCol - column) <= 1)) { 
-            document.getElementById("help").innerHTML = "Help report: meow"
-        }
-        else if ((Math.abs(mouseRow - row) <= 1) && (Math.abs(mouseCol - column) <= 1)) {
-            document.getElementById("help").innerHTML = "Help report: squeak"
-        }
-        else {
-            document.getElementById("help").innerHTML = "Help report: sorry, no help available"
-        }
+      if ((Math.abs(catRow - row) <= 1) && (Math.abs(catCol - column) <= 1)) {
+        document.getElementById("help").innerHTML = "Help report: meow"
+      }
+      else if ((Math.abs(mouseRow - row) <= 1) && (Math.abs(mouseCol - column) <= 1)) {
+        document.getElementById("help").innerHTML = "Help report: squeak"
+      }
+      else {
+        document.getElementById("help").innerHTML = "Help report: sorry, no help available"
+      }
 
-        penalty += 2
-        document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+      penalty += 2
+      document.getElementById("penalty").innerHTML = "Penalty is " + penalty
+    }
+    function bonus() {
+      for (let i = 0; i < ids.length; i++) {
+        document.getElementById(ids[i]).src = "bush.jpg"
+      }
+      checkCount = 0
+      penalty = 0
+      gameOver = false
+      document.getElementById("bushes").innerHTML = "Number of bushes checked is zero."
+      document.getElementById("penalty").innerHTML = "Penalty is zero."
+
+      check(Math.floor(Math.random() * 24))
     }
 
   </script>
